@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+public class UIController : MonoBehaviour, IUIController
 {
     [SerializeField] private Image lifePrefab = null;
     [SerializeField] private Transform livesParent = null;

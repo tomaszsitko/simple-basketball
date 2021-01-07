@@ -1,26 +1,30 @@
 ﻿using UnityEngine;
+using Utility.Zenject;
+using Zenject;
 
-public class GameController : MonoBehaviour
+public class GameController : MonoBehaviour, IGameController, IInjectable<IUIController>
 {
     public const int MaxLivesCount = 3;
 
-    public static GameController Instance;
-
     [SerializeField] private Ball ball = null;
-    private UIController uiController;
+
+    private IUIController uiController;
 
     private int lives;
     private int score;
 
+    [Inject]
+    public void Construct(IUIController uiController)
+    {
+        this.uiController = uiController;
+    }
+
     private void Start()
     {
-        Instance = this;
-        uiController = GetComponent<UIController>();
-
         StartNewGame();
     }
 
-    public void StartNewGame()
+    private void StartNewGame()
     {
         score = 0;
         lives = MaxLivesCount;

@@ -1,26 +1,37 @@
 ﻿using UnityEngine;
+using Utility.Zenject;
+using Zenject;
 
-public class Ball : MonoBehaviour
+public class Ball : MonoBehaviour, IInjectable<IGameController, ICameraController>
 {
     private const string BasketColliderTag = "Basket";
+    private const string GroundColliderTag = "Ground";
 
-    protected bool Interactable { get; set; }
+    private IGameController gameController;
+    private ICameraController cameraController;
 
-    private Vector3 startPosition;
     private Rigidbody2D rb;
-    private CameraController cameraController;
+    private Vector3 startPosition;
+
+    private bool interactable;
+
+    [Inject]
+    public void Construct(IGameController gameController, ICameraController cameraController)
+    {
+        this.gameController = gameController;
+        this.cameraController = cameraController;
+    }
 
     private void Awake()
     {
         startPosition = transform.position;
 
         rb = GetComponent<Rigidbody2D>();
-        cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     public void ResetPosition()
     {
-        Interactable = true;
+        interactable = true;
         rb.isKinematic = true;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = 0f;
@@ -29,15 +40,15 @@ public class Ball : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Interactable)
+        if (interactable)
             cameraController.StartDrawShootLine();
     }
 
     private void OnMouseUp()
     {
-        if (Interactable)
+        if (interactable)
         {
-            Interactable = false;
+            interactable = false;
             cameraController.StopShootDrawLine();
             Shoot();
         }
@@ -52,7 +63,13 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag != BasketColliderTag)
-            GameController.Instance.OnMissedShoot();
+        if (collision.gameObject.tag == GroundColliderTag)
+            gameController.OnMissedShoot();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == BasketColliderTag)
+            gameController.OnHitShoot();
     }
 }

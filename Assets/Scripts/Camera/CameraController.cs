@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
-public class CameraController : MonoBehaviour
+[RequireComponent(typeof(UnityEngine.Camera))]
+public class CameraController : MonoBehaviour, ICameraController
 {
     private static readonly Color LineColor = new Color(0f, 0f, 0f, 1f);
 
