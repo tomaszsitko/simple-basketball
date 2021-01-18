@@ -1,24 +1,25 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(UnityEngine.Camera))]
+[RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour, ICameraController
 {
     private static readonly Color LineColor = new Color(0f, 0f, 0f, 1f);
 
-    [SerializeField] private Material lineMaterial = null;
-    [SerializeField] private Transform ballTransform = null;
-
+    private Material lineMaterial;
     private Camera cam;
 
-    private bool draw;
+    protected Vector3 startLinePosition;
+    protected bool draw;
 
     private void Start()
     {
         cam = GetComponent<Camera>();
+        lineMaterial = new Material(Shader.Find("Standard"));
     }
 
-    public void StartDrawShootLine()
+    public void StartDrawShootLine(Vector3 position)
     {
+        startLinePosition = position;
         draw = true;
     }
 
@@ -44,7 +45,7 @@ public class CameraController : MonoBehaviour, ICameraController
         GL.Begin(GL.LINES);
         lineMaterial.SetPass(0);
         GL.Color(LineColor);
-        GL.Vertex(ballTransform.position);
+        GL.Vertex(startLinePosition);
         GL.Vertex(GetEndPosition());
         GL.End();
     }
@@ -52,6 +53,6 @@ public class CameraController : MonoBehaviour, ICameraController
     private Vector3 GetEndPosition()
     {
         Vector3 mousePosition = ToWorldCoordinates(Input.mousePosition);
-        return ballTransform.position - mousePosition;
+        return startLinePosition - mousePosition;
     }
 }

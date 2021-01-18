@@ -2,7 +2,7 @@
 
 public interface ICameraController
 {
-    void StartDrawShootLine();
+    void StartDrawShootLine(Vector3 position);
     void StopShootDrawLine();
 
     Vector3 ToWorldCoordinates(Vector3 position);

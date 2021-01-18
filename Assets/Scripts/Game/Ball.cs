@@ -2,6 +2,7 @@
 using Utility.Zenject;
 using Zenject;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Ball : MonoBehaviour, IInjectable<IGameController, ICameraController>
 {
     private const string BasketColliderTag = "Basket";
@@ -10,10 +11,10 @@ public class Ball : MonoBehaviour, IInjectable<IGameController, ICameraControlle
     private IGameController gameController;
     private ICameraController cameraController;
 
-    private Rigidbody2D rb;
-    private Vector3 startPosition;
+    protected Rigidbody2D rb;
+    protected Vector3 startPosition;
 
-    private bool interactable;
+    protected bool interactable;
 
     [Inject]
     public void Construct(IGameController gameController, ICameraController cameraController)
@@ -41,7 +42,7 @@ public class Ball : MonoBehaviour, IInjectable<IGameController, ICameraControlle
     private void OnMouseDown()
     {
         if (interactable)
-            cameraController.StartDrawShootLine();
+            cameraController.StartDrawShootLine(transform.position);
     }
 
     private void OnMouseUp()
