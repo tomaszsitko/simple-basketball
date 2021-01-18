@@ -10,9 +10,7 @@
 
 # Code coverage files without coverage image
 CodeCoverage/*
-!CodeCoverage/Report
 CodeCoverage/Report/*
-!CodeCoverage/Report/badge_linecoverage.png
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta

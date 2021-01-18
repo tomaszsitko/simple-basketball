@@ -1,53 +1,57 @@
-﻿using UnityEngine;
+﻿using SimpleBasketball.UI;
+using UnityEngine;
 using Utility.Zenject;
 using Zenject;
 
-public class GameController : MonoBehaviour, IGameController, IInjectable<IUIController>
+namespace SimpleBasketball.Game
 {
-    public const int MaxLivesCount = 3;
-
-    [SerializeField] private Ball ball = null;
-
-    private IUIController uiController;
-
-    private int lives;
-    private int score;
-
-    [Inject]
-    public void Construct(IUIController uiController)
+    public class GameController : MonoBehaviour, IGameController, IInjectable<IUIController>
     {
-        this.uiController = uiController;
-    }
+        public const int MaxLivesCount = 3;
 
-    private void Start()
-    {
-        StartNewGame();
-    }
+        [SerializeField] protected Ball ball = null;
 
-    private void StartNewGame()
-    {
-        score = 0;
-        lives = MaxLivesCount;
+        protected IUIController uiController;
 
-        uiController.Init();
-        ball.ResetPosition();
-    }
+        protected int lives;
+        protected int score;
 
-    public void OnHitShoot()
-    {
-        score++;
-        ball.ResetPosition();
-        uiController.UpdateScoreDisplay(score);
-    }
+        [Inject]
+        public void Construct(IUIController uiController)
+        {
+            this.uiController = uiController;
+        }
 
-    public void OnMissedShoot()
-    {
-        lives--;
-        uiController.UpdateLivesDisplay(lives);
-
-        if (lives <= 0)
+        protected void Start()
+        {
             StartNewGame();
-        else
+        }
+
+        private void StartNewGame()
+        {
+            score = 0;
+            lives = MaxLivesCount;
+
+            uiController.Init();
             ball.ResetPosition();
+        }
+
+        public void OnHitShoot()
+        {
+            score++;
+            ball.ResetPosition();
+            uiController.UpdateScoreDisplay(score);
+        }
+
+        public void OnMissedShoot()
+        {
+            lives--;
+            uiController.DecreaseLivesDisplay();
+
+            if (lives <= 0)
+                StartNewGame();
+            else
+                ball.ResetPosition();
+        }
     }
 }

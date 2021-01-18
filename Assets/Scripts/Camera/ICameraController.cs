@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public interface ICameraController
+namespace SimpleBasketball.Camera
 {
-    void StartDrawShootLine(Vector3 position);
-    void StopShootDrawLine();
+    public interface ICameraController
+    {
+        void StartDrawShootLine(Vector3 position);
+        void StopShootDrawLine();
 
-    Vector3 ToWorldCoordinates(Vector3 position);
+        Vector3 ToWorldCoordinates(Vector3 position);
+    }
 }

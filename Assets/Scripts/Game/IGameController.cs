@@ -1,5 +1,8 @@
-﻿public interface IGameController
+﻿namespace SimpleBasketball.Game
 {
-    void OnMissedShoot();
-    void OnHitShoot();
+    public interface IGameController
+    {
+        void OnMissedShoot();
+        void OnHitShoot();
+    }
 }

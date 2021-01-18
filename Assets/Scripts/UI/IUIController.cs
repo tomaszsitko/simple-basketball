@@ -1,6 +1,9 @@
-﻿public interface IUIController
+﻿namespace SimpleBasketball.UI
 {
-    void Init();
-    void UpdateLivesDisplay(int lives);
-    void UpdateScoreDisplay(int score);
+    public interface IUIController
+    {
+        void Init();
+        void DecreaseLivesDisplay();
+        void UpdateScoreDisplay(int score);
+    }
 }

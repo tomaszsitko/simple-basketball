@@ -1,3 +1,6 @@
+using SimpleBasketball.Camera;
+using SimpleBasketball.Game;
+using SimpleBasketball.UI;
 using UnityEngine;
 
 namespace Utility.Zenject

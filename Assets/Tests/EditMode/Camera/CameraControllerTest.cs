@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
+using SimpleBasketball.Camera;
 
 namespace SimpleBasketball.Tests
 {
