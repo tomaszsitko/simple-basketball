@@ -11,7 +11,3 @@ Simple basketball game in Unity Engine.
 * Unity
 * Gimp
 * C#
-
-## Team
-
-[Tomasz Sitko](mailto:contact@tomaszsitko.pl) - Developer
